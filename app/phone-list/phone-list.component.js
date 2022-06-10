@@ -3,8 +3,8 @@ angular
   .module('phoneList')
   .component('phoneList', {  // This name is what AngularJS uses to match to the `<phone-list>` element.
     templateUrl: 'phone-list/phone-list.template.html',
-    controller: ['$http', '$scope',
-      function PhoneListController($http, $scope) {
+    controller: ['$http', '$scope', 'uiGridGridMenuService',
+      function PhoneListController($http, $scope, uiGridGridMenuService) {
         $scope.phones = [];
 
         $scope.gridOptions = {
@@ -13,7 +13,7 @@ angular
           enableFiltering: true,
           onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
-        },
+          },
         }
 
         $http.get('/phones/phones.json').then(function (response) {
@@ -21,9 +21,13 @@ angular
           $scope.gridOptions.data = $scope.phones;
         });
 
-        $scope.clear = function() {
+        $scope.clear = function () {
           $scope.gridApi.core.clearAllFilters();
-          // console.log($scope.gridApi);
-      };
+        };
+
+        $scope.toggleColumns = function () {
+          // TODO: Now that we have the service, can we get the menu items?
+          console.log(uiGridGridMenuService);
+        }
       }]
   });
