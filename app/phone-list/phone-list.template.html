@@ -1,7 +1,11 @@
 
 <div class="grid">
     <h1>Playground</h1>
-    <div id="grid1" ui-grid=gridOptions class="mb-3"></div>
+    <div ui-grid=gridOptions class="mb-3"></div>
     <button class="btn btn-default" ng-click="clear()">Clear All Filters</button>
     <button class="btn btn-default" ng-click="toggleColumns()">Show/Hide Columns</button>
+    <div ng-repeat="menuItem in menuItems">
+        <input type="checkbox" value="{{menuItem.title}}" name="menuItem{{$index + 1}}" id="menuItem{{$index + 1}}">
+        <label for="menuItem{{$index + 1}}">{{menuItem.title}}</label>
+    </div>
 </div>

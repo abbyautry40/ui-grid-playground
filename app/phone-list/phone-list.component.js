@@ -6,6 +6,7 @@ angular
     controller: ['$http', '$scope', 'uiGridGridMenuService',
       function PhoneListController($http, $scope, uiGridGridMenuService) {
         $scope.phones = [];
+        $scope.menuItems = [];
 
         $scope.gridOptions = {
           data: [],
@@ -13,7 +14,7 @@ angular
           enableFiltering: true,
           onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
-          },
+          }
         }
 
         $http.get('/phones/phones.json').then(function (response) {
@@ -26,8 +27,9 @@ angular
         };
 
         $scope.toggleColumns = function () {
-          // TODO: Now that we have the service, can we get the menu items?
-          console.log(uiGridGridMenuService);
+          console.log('uiGridGridMenuService.getMenuItems($scope.gridApi) :>> ', uiGridGridMenuService.getMenuItems($scope.gridApi));
+
+          $scope.menuItems = uiGridGridMenuService.getMenuItems($scope.gridApi);
         }
       }]
   });
