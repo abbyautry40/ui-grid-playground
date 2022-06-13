@@ -7,10 +7,11 @@ angular
       function PhoneListController($http, $scope, uiGridGridMenuService) {
         $scope.phones = [];
         $scope.menuItems = [];
+        $scope.canViewMenu = false;
 
         $scope.gridOptions = {
           data: [],
-          enableGridMenu: true,
+          enableGridMenu: false,
           enableFiltering: true,
           onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
@@ -26,10 +27,23 @@ angular
           $scope.gridApi.core.clearAllFilters();
         };
 
-        $scope.toggleColumns = function () {
-          console.log('uiGridGridMenuService.getMenuItems($scope.gridApi) :>> ', uiGridGridMenuService.getMenuItems($scope.gridApi));
+        $scope.toggleMenu = function () {
+          /** 
+           * There are issues tring to initialize getMenuItems
+           * Could be a possible race condition between fetching the
+           * data and registering the api.
+           * 
+          */
+          if ($scope.menuItems.length === 0) {
+            $scope.getMenuItems();
+          }
 
+          $scope.canViewMenu = !$scope.canViewMenu;
+        }
+
+        $scope.getMenuItems = function () {
           $scope.menuItems = uiGridGridMenuService.getMenuItems($scope.gridApi);
+          console.log('$scope.menuItems :>> ', $scope.menuItems);
         }
       }]
   });
