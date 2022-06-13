@@ -6,7 +6,7 @@
     <button class="btn btn-default" ng-click="toggleMenu()">Show/Hide Columns</button>
     <div ng-show="canViewMenu">
         <div ng-repeat="menuItem in menuItems">
-            <input type="checkbox" value="{{menuItem.title}}" name="menuItem{{$index + 1}}" id="menuItem{{$index + 1}}">
+            <input type="checkbox" value="{{menuItem.title}}" name="{{gridId}}" id="menuItem{{$index + 1}}">
             <label for="menuItem{{$index + 1}}">{{menuItem.title}}</label>
         </div>
     </div>
