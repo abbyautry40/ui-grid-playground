@@ -12,9 +12,9 @@ angular
         $scope.gridOptions = {
           data: [],
           enableGridMenu: false,
-          enableFiltering: true,
           onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
+            $scope.gridId = `grid_${$scope.gridApi.grid.id}`;
           }
         }
 
@@ -34,7 +34,7 @@ angular
            * data and registering the api.
            * 
           */
-          if ($scope.menuItems.length === 0) {
+          if ($scope.menuItems && $scope.menuItems.length === 0) {
             $scope.getMenuItems();
           }
 
@@ -42,7 +42,13 @@ angular
         }
 
         $scope.getMenuItems = function () {
-          $scope.menuItems = uiGridGridMenuService.getMenuItems($scope.gridApi);
+          let menuItems = uiGridGridMenuService.getMenuItems($scope.gridApi);
+          menuItems.pop(); // The last item is undefined. This is a bug in the gridApi
+          menuItems.shift(); // We want to remove 'Clear All Filters' which is default behavior in the gridApi
+          menuItems.shift(); // We want to remove 'Columns'
+
+          $scope.menuItems = menuItems;
+
           console.log('$scope.menuItems :>> ', $scope.menuItems);
         }
       }]
