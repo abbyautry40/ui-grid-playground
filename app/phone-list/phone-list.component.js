@@ -7,7 +7,6 @@ angular
       function PhoneListController($http, $scope, uiGridGridMenuService) {
         $scope.phones = [];
         $scope.menuItems = [];
-        $scope.canViewMenu = false;
 
         $scope.gridOptions = {
           data: [],
