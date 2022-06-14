@@ -3,11 +3,26 @@
     <h1>Playground</h1>
     <div ui-grid=gridOptions class="mb-3"></div>
     <button class="btn btn-default" ng-click="clear()">Clear All Filters</button>
-    <button class="btn btn-default" ng-click="toggleMenu()">Show/Hide Columns</button>
-    <div ng-show="canViewMenu">
-        <div ng-repeat="menuItem in menuItems">
-            <input type="checkbox" value="{{menuItem.title}}" name="{{gridId}}" id="menuItem{{$index + 1}}">
-            <label for="menuItem{{$index + 1}}">{{menuItem.title}}</label>
-        </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Show/Hide Columns <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems">
+                <div>
+                    <label for="menuItem{{$index + 1}}">
+                        <input 
+                            type="checkbox" 
+                            value="{{menuItem.title}}" 
+                            name="{{gridId}}" 
+                            id="menuItem{{$index + 1}}" 
+                            ng-click="toggleColumn($event, menuItem)"
+                            checked
+                        >
+                        {{menuItem.title}}
+                    </label>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>

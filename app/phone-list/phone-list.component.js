@@ -23,33 +23,33 @@ angular
           $scope.gridOptions.data = $scope.phones;
         });
 
+        /**
+         * We need to ensure that we have gridApi and the data needed.
+         * onRegisterApi is meant to register custom functions and does
+         * not call local functions.
+         */
+        $scope.$watchGroup(['gridApi', 'phones'], function (newValues, _) {
+          if (newValues[0] && newValues[1]) {
+            $scope.getMenuItems();
+          }
+        });
+
         $scope.clear = function () {
           $scope.gridApi.core.clearAllFilters();
         };
 
-        $scope.toggleMenu = function () {
-          /** 
-           * There are issues tring to initialize getMenuItems
-           * Could be a possible race condition between fetching the
-           * data and registering the api.
-           * 
-          */
-          if ($scope.menuItems && $scope.menuItems.length === 0) {
-            $scope.getMenuItems();
-          }
-
-          $scope.canViewMenu = !$scope.canViewMenu;
+        $scope.toggleColumn = function (event, menuItem) {
+          menuItem.action(event);
         }
 
         $scope.getMenuItems = function () {
           let menuItems = uiGridGridMenuService.getMenuItems($scope.gridApi);
+
           menuItems.pop(); // The last item is undefined. This is a bug in the gridApi
           menuItems.shift(); // We want to remove 'Clear All Filters' which is default behavior in the gridApi
           menuItems.shift(); // We want to remove 'Columns'
 
           $scope.menuItems = menuItems;
-
-          console.log('$scope.menuItems :>> ', $scope.menuItems);
         }
       }]
   });
